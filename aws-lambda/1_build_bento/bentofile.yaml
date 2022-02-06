@@ -1,0 +1,6 @@
+service: "bento.py:svc"
+include:
+  - "*.py"
+python:
+  packages:
+    - transformers[torch]
