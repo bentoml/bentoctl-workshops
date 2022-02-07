@@ -2,9 +2,12 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import bentoml
 
 
-MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
-# if you want a smaller model, use this (~200M)
+# PLEASE UNCOMMENT THE MODEL YOU WANT TO USE
+# MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
+# MODEL = "dhpollack/distilbert-dummy-sentiment"
 # MODEL = "bhadresh-savani/distilbert-base-uncased-sentiment-sst2"
+
+
 tokenizer = AutoTokenizer.from_pretrained(MODEL)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 

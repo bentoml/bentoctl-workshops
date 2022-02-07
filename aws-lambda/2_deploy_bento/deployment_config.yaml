@@ -1,0 +1,9 @@
+api_version: v1
+metadata:
+  name: sentiment_analysis
+  operator: aws-lambda
+spec:
+  bento: sentiment_analysis:latest
+  region: us-east-1
+  timeout: 180
+  memory_size: 10240
