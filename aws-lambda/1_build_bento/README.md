@@ -82,6 +82,8 @@ http://127.0.0.1:5000/predict
 {"label":"NEUTRAL","score":0.612240731716156}% 
 ```
 
+Go ahead and sent different texts to the endpoint and see what the responses are.
+Note: if you are using the dummy model then the result will be always consant.
 
 3. Build Bento 
 
