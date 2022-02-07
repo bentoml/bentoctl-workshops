@@ -14,8 +14,9 @@ testing, we will build it and save to the local system.
 
 1. Create the model
 
-We going to use a pre-trained model from the Hugging Face. You are free another other model
-you preffer too. Currently we have 2 models that we can use in the train.py script
+We going to use a pre-trained model from the Hugging Face. You are free another
+other model you preffer too. Currently we have 2 models that we can use in the
+train.py script
 
 - `cardiffnlp/twitter-roberta-base-sentiment` - a very popular model that is
   used for sentiment analysis tasks. Model size is ~500Mb.
@@ -74,8 +75,11 @@ Once the server has started up successfully, send test request in another termin
 curl \
 -X POST \
 -H "content-type: application/json" \
---data "[[5, 4, 3, 2]]" \
+--data "This is a test." \
 http://127.0.0.1:5000/predict
+
+# sample output
+{"label":"NEUTRAL","score":0.612240731716156}% 
 ```
 
 
@@ -85,15 +89,34 @@ Now that we have tested the service and made sure everything is working lets bui
 the bento save it to the local bento store.
 ```
 bentoml build
+
+# sample output
+[07:49:56 PM ] INFO     Building BentoML service "sentiment_analysis:azyrubeiega4mk5z" from
+                        build context "/home/username/username/bentoml/bentoctl-workshops/aws
+                        -lambda/1_build_bento"
+               INFO     Packing model "sentiment_clf:r573sheh6wbdgh6p" from
+                        "/home/username/bentoml/models/sentiment_clf/r573sheh6wbdgh6p"
+               INFO     Locking PyPI package versions..
+[07:50:02 PM ] INFO
+                        ██████╗░███████╗███╗░░██╗████████╗░█████╗░███╗░░░███╗██╗░░░░░
+                        ██╔══██╗██╔════╝████╗░██║╚══██╔══╝██╔══██╗████╗░████║██║░░░░░
+                        ██████╦╝█████╗░░██╔██╗██║░░░██║░░░██║░░██║██╔████╔██║██║░░░░░
+                        ██╔══██╗██╔══╝░░██║╚████║░░░██║░░░██║░░██║██║╚██╔╝██║██║░░░░░
+                        ██████╦╝███████╗██║░╚███║░░░██║░░░╚█████╔╝██║░╚═╝░██║███████╗
+                        ╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░░╚════╝░╚═╝░░░░░╚═╝╚══════╝
+
+               INFO     Successfully built Bento(tag="sentiment_analysis:azyrubeiega4mk5z")
+                        at
+                        "/home/username/bentoml/bentos/sentiment_analysis/azyrubeiega4mk5z/"
 ```
 
 4. Validate build result
 
-List out the bentos using the `bentoml list` command and see if the bento `sentiment_clf`
-that we just created is there.
+List out the bentos using the `bentoml list` command and see if the bento
+`sentiment_clf` that we just created is there.
 ```
 > bentoml list
 # sample output
- Tag                                  Service      Path                                                               Size        Creation Time
- sentiment_analysis:uja63oeh6wbdgh6p  bento:svc    ~/bentoml/bentos/sentiment_analysis/uja63oeh6wbdgh6p  478.79 MiB  2022-02-07 09:09:26
+Tag                                  Service      Path                                                               Size        Creation Time
+sentiment_analysis:uja63oeh6wbdgh6p  bento:svc    ~/bentoml/bentos/sentiment_analysis/uja63oeh6wbdgh6p  478.79 MiB  2022-02-07 09:09:26
 ```
