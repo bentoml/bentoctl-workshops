@@ -6,7 +6,7 @@ Time to complete: 5 - 10 minutes.
 ### What are we building?
 
 * We are setting up the AWS credential with the permissions to different services.
-* Install required packages to build and deploy to Lambada
+* Install bentoctl and the `aws-lambda` operator required to deploy to AWS Lambda.
 
 
 ### Setup AWS account
@@ -29,8 +29,11 @@ Time to complete: 5 - 10 minutes.
 pip install --pre bentoctl
 ```
 
-2. Download other required packages
+2. Install the Hugging Face transformers library along with pytorch since we
+   will be using pytorch based models for building our service.
 
 ```
-pip install -r requirements.txt
+pip install transformers[torch]
 ```
+
+3. Add the `aws-lambda` operator
