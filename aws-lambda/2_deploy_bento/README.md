@@ -1,17 +1,17 @@
-## Deploy bento to Lambda
+# Deploy bento to Lambda
 
 Time to complete: 15-20 minutes(depends on your internet speed and the model
 you chose).
 
 
-### What are we building?
+## What are we building?
 
 We are going to deploy our bento to AWS Lambda.
 
 
-### Deploy to AWS Lambda 
+## Deploy to AWS Lambda 
 
-1. Creation of Deployment Configuration file
+### 1. Creation of Deployment Configuration file
  
 The Deployment Configuration file is a YAML file that configures the
 deployment. bentoctl refers to this file to perform its operations.
@@ -53,7 +53,7 @@ bentoctl generate
 ```
 and follow the prompts to create a similar deployment configuration. 
 
-2. Deploy the `sentiment_analysis` service
+### 2. Deploy the `sentiment_analysis` service
 
 With the `deployment_config.yaml` file generated we can now deploy the service 
 using 
@@ -64,7 +64,7 @@ This will create the AWS resources required for creating our endpoint. This
 step might take a while depending on your internet speeds. Once the deployment
 is completed it will print out a description of the deployment.
 
-3. Verify the deployment
+### 3. Verify the deployment
 
 In order to check the status of the deployment, we can use the `describe` command.
 ```
@@ -85,7 +85,7 @@ LastUpdatedTime etc. Make sure the StackStatus is in the `CREATE_COMPLETE`
 state, which implies a successfull deployment.
 
 
-4. Test the endpoint
+### 4. Test the endpoint
 
 Now that our model is running successfully on the cloud, lets make some
 requests to the endpoint. The URL for the lambda service is given by the `EndpointUrl`.
@@ -105,12 +105,14 @@ And that is it, we have successfully deployed the bentoml service to AWS Lambda.
 
 
 **Q: My request returns a 504 with the message "Endpoint request timed out" ?**
+
 Incase your request times out, it is most likely due to the lambda not having enought
 memory to load the model and perform the inference. You should increase the 
 memory allocated and try again.
 
 
 **Q: How do I see the logs for the deployment?**
+
 All the logs for the deployment are logged into the AWS CloudWatch service. You
 can checkout the logs at CloudWatch -> Logs -> Log groups ->
 sentiment_analysis-predict and you can see all the log streams.
