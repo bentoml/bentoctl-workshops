@@ -104,6 +104,8 @@ https://99i8raooj6.execute-api.us-east-1.amazonaws.com/Prod/predict
 And that is it, we have successfully deployed the bentoml service to AWS Lambda.
 
 
+## FAQ
+
 **Q: My request returns a 504 with the message "Endpoint request timed out" ?**
 
 Incase your request times out, it is most likely due to the lambda not having enought
