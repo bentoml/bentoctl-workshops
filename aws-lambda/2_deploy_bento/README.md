@@ -14,7 +14,7 @@ We are going to deploy our bento to AWS Lambda.
 ### 1. Creation of Deployment Configuration file
  
 The Deployment Configuration file is a YAML file that configures the
-deployment. bentoctl refers to this file to perform its operations.
+deployment. bentoctl refers to this file to perform operations.
 
 This is the deployment configuration we can use to deploy the sentiment_analysis
 service into lambda.
@@ -82,14 +82,14 @@ bentoctl describe -f ./deployment_config.yaml
 ```
 This will show releavent information like the EndpointUrl, StackStatus,
 LastUpdatedTime etc. Make sure the StackStatus is in the `CREATE_COMPLETE`
-state, which implies a successfull deployment.
+state, which confirms a successfull deployment.
 
 
 ### 4. Test the endpoint
 
 Now that our model is running successfully on the cloud, lets make some
 requests to the endpoint. The URL for the lambda service is given by the `EndpointUrl`.
-We can use curl to sent the exact same request used in the previous step.
+We can use curl to sent the exact same request used in the previous step (1. build bento).
 ```
 curl \
 -X POST \
@@ -101,14 +101,15 @@ https://99i8raooj6.execute-api.us-east-1.amazonaws.com/Prod/predict
 {"label":"NEUTRAL","score":0.612240731716156}% 
 ```
 
-And that is it, we have successfully deployed the bentoml service to AWS Lambda.
+And that is it, we have successfully deployed the bentoml service to AWS Lambda. Next we will
+cleanup the all the resources.
 
 
 ## FAQ
 
 **Q: My request returns a 504 with the message "Endpoint request timed out" ?**
 
-Incase your request times out, it is most likely due to the lambda not having enought
+Incase your request times out, it is most likely due to lambda not having enought
 memory to load the model and perform the inference. You should increase the 
 memory allocated and try again.
 
