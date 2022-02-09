@@ -13,9 +13,7 @@ AWS Lambda. We will
 
 1. Build a [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) service with
 BentoML and Hugging Face transformers model 
-
 2. Deploy it to AWS Lambda using bentoctl. 
-
 3. Finally we will run an inference against the deployed Lambda function.
 
 
