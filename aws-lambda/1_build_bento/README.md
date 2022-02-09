@@ -5,8 +5,11 @@ Time to complete: 10 minutes.
 ## What are we building?
 
 We are going to build a ML server with BentoML. First we will create an
-sentiment analysis model with the Hugging Face transformers library. We will be
-using a pre-trained model and then we will build a Bento server with it. After
+[sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) model with 
+the [Hugging Face transformers library](https://huggingface.co/docs/transformers/index). 
+This model, given a text input, will
+infer how positive or negative the sentiment of the input text is. We will be
+using a pre-trained model and we will build a Bento server with it. After
 testing, we will build it and save to the local system.
 
 
@@ -14,22 +17,26 @@ testing, we will build it and save to the local system.
 
 ### 1. Create the model
 
-We going to use a pre-trained model from the Hugging Face. You are free another
-other model you preffer too. Currently we have 2 models that we can use in the
-train.py script
+We going to use a pre-trained model from the Hugging Face. The `train.py` file
+has 3 models that are ready to be used.
 
 - `cardiffnlp/twitter-roberta-base-sentiment` - a very popular model that is
   used for sentiment analysis tasks. Model size is ~500Mb.
-- `dhpollack/distilbert-dummy-sentiment` - this is a dummy model that can be
-  used if you want to create a lighter bento service that consumes the lowest
-  bandwith possible.
+- `bhadresh-savani/distilbert-base-uncased-sentiment-sst2` - this model is 
+  based on distill bert and is ~250Mb in size.
+- `dhpollack/distilbert-dummy-sentiment` - this is a dummy model that outputs
+  random results for any inference string.
+  
+You are free to choose any of these 3 models as you see fit. If you choose a 
+larger model it might take you longer to complete the workshop based on your 
+internet speed but will give better results after inferenence. 
 
-Open the `train.py` file uncomment the `MODEL` name that you want to use and
-then run
+To choose the model, open the `train.py` 
+file and uncomment the `MODEL` name that you want to use and then run
 ```
 python train.py
 ```
-This will download the model and save it into the BentoML Local Model Store.
+This will download the model and save it into the BentoML local model store.
 
 ### 2. Test and debug Bento Server
 
@@ -37,16 +44,20 @@ The BentoML service has been created for you in the `./bento.py` file. Lets take
 a look at that file
 
 ```python
-# ./bento.py
+from typing import Dict
+
 import bentoml
 from bentoml.io import JSON, Text
 
+# create a runner with the sentiment_clf model
 sentiment_clf_runner = bentoml.transformers.load_runner(
     "sentiment_clf:latest", tasks="sentiment-analysis", lm_head="classifier"
 )
 
+# create a new bentoml service and the sentiment_clf_runner to it
 svc = bentoml.Service("sentiment_analysis", runners=[sentiment_clf_runner])
 
+# dict to convert Lable from model -> Human readable label
 keys = {
     "LABEL_0": "NEGATIVE",
     "LABEL_1": "NEUTRAL",
@@ -54,17 +65,28 @@ keys = {
 }
 
 
+# define the /predict endpoint that is used for inference
 @svc.api(input=Text(), output=JSON())
-def predict(input_text):
+def predict(input_text: str) -> Dict:
+    """
+    /predict endpoint
+
+    This endpoint takes a Text input, runs the inference with the runner
+    and returns the result as JSON.
+    """
+    # run inference with the input_text that is received to the endpoint
     result = sentiment_clf_runner.run(input_text)
 
+    # post-processing
     if result["label"] in keys:
         result["label"] = keys[result["label"]]
+
+    # return the result as response
     return result
 ```
 
-As you can see the service takes in Text input and return a JSON with the result.
-Let run serve this service and test the API out.
+This service takes in Text input and return a JSON with the result.
+Let's serve this service and test the API out.
 ```
 bentoml serve ./bento.py:svc --reload
 ```
@@ -83,11 +105,11 @@ http://127.0.0.1:5000/predict
 ```
 
 Go ahead and sent different texts to the endpoint and see what the responses are.
-Note: if you are using the dummy model then the result will be always consant.
+Note: if you are using the dummy model then the result will be always `{"label":"NEGATIVE","score":0.5%`.
 
 ### 3. Build Bento 
 
-Now that we have tested the service and made sure everything is working lets build
+Now that we have tested the service and made sure everything is working let's build
 the bento save it to the local bento store.
 ```
 bentoml build
@@ -122,3 +144,7 @@ List out the bentos using the `bentoml list` command and see if the bento
 Tag                                  Service      Path                                                               Size        Creation Time
 sentiment_analysis:uja63oeh6wbdgh6p  bento:svc    ~/bentoml/bentos/sentiment_analysis/uja63oeh6wbdgh6p  478.79 MiB  2022-02-07 09:09:26
 ```
+
+If it is, the congrats, you have successfully created a bentoml service for 
+sentiment analysis using a pretrained model from Hugging Face. Now lets 
+deploy this into AWS Lambda.
