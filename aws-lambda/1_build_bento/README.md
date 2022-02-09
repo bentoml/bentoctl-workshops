@@ -32,7 +32,26 @@ larger model it might take you longer to complete the workshop based on your
 internet speed but will give better results after inferenence. 
 
 To choose the model, open the `train.py` 
-file and uncomment the `MODEL` name that you want to use and then run
+file and uncomment the `MODEL` name that you want to use like this
+```
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import bentoml
+
+
+# PLEASE UNCOMMENT THE MODEL YOU WANT TO USE
+MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
+# MODEL = "bhadresh-savani/distilbert-base-uncased-sentiment-sst2"
+# MODEL = "dhpollack/distilbert-dummy-sentiment"
+
+
+# load the model and tokenizer for the MODEL selected
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+
+# save the model into bentoml's model store
+bentoml.transformers.save("sentiment_clf", model=model, tokenizer=tokenizer)
+```
+and then run
 ```
 python train.py
 ```
@@ -40,7 +59,7 @@ This will download the model and save it into the BentoML local model store.
 
 ### 2. Test and debug Bento Server
 
-The BentoML service has been created for you in the `./bento.py` file. Lets take
+The BentoML service has been created for you in the `./bento.py` file. Let's take
 a look at that file
 
 ```python
@@ -105,7 +124,7 @@ http://127.0.0.1:5000/predict
 ```
 
 Go ahead and sent different texts to the endpoint and see what the responses are.
-Note: if you are using the dummy model then the result will be always `{"label":"NEGATIVE","score":0.5%`.
+Note: if you are using the dummy model then the result will be always `{"label":"NEGATIVE","score":0.5%}%`.
 
 ### 3. Build Bento 
 
@@ -146,5 +165,5 @@ sentiment_analysis:uja63oeh6wbdgh6p  bento:svc    ~/bentoml/bentos/sentiment_ana
 ```
 
 If it is, the congrations, you have successfully created the bentoml service for 
-sentiment analysis using a pretrained model from Hugging Face. Now lets 
+sentiment analysis using a pretrained model from Hugging Face. Now let's 
 deploy this into AWS Lambda.
