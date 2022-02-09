@@ -11,12 +11,10 @@ We are going to deploy our bento to AWS Lambda.
 
 ### Deploy to AWS Lambda 
 
-This is where you get to see bentoctl in action. The first step for deploying is
-to create the deployment configuration file
-
 1. Creation of Deployment Configuration file
-| Deployments in bentoctl are defined by the deployment configuration. This YAML file specifies everything bentoctl needs to carry out the deployment and represents the configuration for the cloud service.
-| (refer to the Core Concepts page to know more)
+ 
+The Deployment Configuration file is a YAML file that configures the
+deployment. bentoctl refers to this file to perform its operations.
 
 This is the deployment configuration we can use to deploy the sentiment_analysis
 service into lambda.
@@ -55,9 +53,64 @@ bentoctl generate
 ```
 and follow the prompts to create a similar deployment configuration. 
 
-2. Deploy the sentiment_analysis service
+2. Deploy the `sentiment_analysis` service
 
-3. Verify the Endpoint
+With the `deployment_config.yaml` file generated we can now deploy the service 
+using 
+```
+bentoctl deploy -f ./deployment_config.yaml
+```
+This will create the AWS resources required for creating our endpoint. This
+step might take a while depending on your internet speeds. Once the deployment
+is completed it will print out a description of the deployment.
+
+3. Verify the deployment
+
+In order to check the status of the deployment, we can use the `describe` command.
+```
+bentoctl describe -f ./deployment_config.yaml
+
+# sample output
+{
+  "StackId": "arn:aws:cloudformation:us-east-1:213386773652:stack/sentiment-analysis-stack/ba6fac50-87f9-11ec-8ccc-0e92b8ecbd8f",
+  "StackName": "sentiment-analysis-stack",
+  "StackStatus": "CREATE_COMPLETE",
+  "CreationTime": "02/07/2022, 09:38:38",
+  "LastUpdatedTime": "02/07/2022, 09:38:51",
+  "EndpointUrl": "https://99i8raooj6.execute-api.us-east-1.amazonaws.com/Prod"
+}
+```
+This will show releavent information like the EndpointUrl, StackStatus,
+LastUpdatedTime etc. Make sure the StackStatus is in the `CREATE_COMPLETE`
+state, which implies a successfull deployment.
 
 
-### How does it work?
+4. Test the endpoint
+
+Now that our model is running successfully on the cloud, lets make some
+requests to the endpoint. The URL for the lambda service is given by the `EndpointUrl`.
+We can use curl to sent the exact same request used in the previous step.
+```
+curl \
+-X POST \
+-H "content-type: application/json" \
+--data "This is a test." \
+https://99i8raooj6.execute-api.us-east-1.amazonaws.com/Prod/predict
+
+# sample output
+{"label":"NEUTRAL","score":0.612240731716156}% 
+```
+
+And that is it, we have successfully deployed the bentoml service to AWS Lambda.
+
+
+**Q: My request returns a 504 with the message "Endpoint request timed out" ?**
+Incase your request times out, it is most likely due to the lambda not having enought
+memory to load the model and perform the inference. You should increase the 
+memory allocated and try again.
+
+
+**Q: How do I see the logs for the deployment?**
+All the logs for the deployment are logged into the AWS CloudWatch service. You
+can checkout the logs at CloudWatch -> Logs -> Log groups ->
+sentiment_analysis-predict and you can see all the log streams.
