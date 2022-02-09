@@ -1,8 +1,8 @@
-## Build ML server with BentoML
+# Build ML server with BentoML
 
 Time to complete: 10 minutes.
 
-### What are we building?
+## What are we building?
 
 We are going to build a ML server with BentoML. First we will create an
 sentiment analysis model with the Hugging Face transformers library. We will be
@@ -10,9 +10,9 @@ using a pre-trained model and then we will build a Bento server with it. After
 testing, we will build it and save to the local system.
 
 
-### Build Bento server
+## Build Bento server
 
-1. Create the model
+### 1. Create the model
 
 We going to use a pre-trained model from the Hugging Face. You are free another
 other model you preffer too. Currently we have 2 models that we can use in the
@@ -31,7 +31,7 @@ python train.py
 ```
 This will download the model and save it into the BentoML Local Model Store.
 
-2. Test and debug Bento Server
+### 2. Test and debug Bento Server
 
 The BentoML service has been created for you in the `./bento.py` file. Lets take
 a look at that file
@@ -85,7 +85,7 @@ http://127.0.0.1:5000/predict
 Go ahead and sent different texts to the endpoint and see what the responses are.
 Note: if you are using the dummy model then the result will be always consant.
 
-3. Build Bento 
+### 3. Build Bento 
 
 Now that we have tested the service and made sure everything is working lets build
 the bento save it to the local bento store.
@@ -112,7 +112,7 @@ bentoml build
                         "/home/username/bentoml/bentos/sentiment_analysis/azyrubeiega4mk5z/"
 ```
 
-4. Validate build result
+### 4. Validate build result
 
 List out the bentos using the `bentoml list` command and see if the bento
 `sentiment_clf` that we just created is there.

@@ -1,4 +1,4 @@
-## Clean up Lambda deployment
+# Clean up Lambda deployment
 
 You can delete all the resources created using the `delete` command for
 bentoctl.

@@ -1,9 +1,9 @@
-## Set up your development environment
+# Set up your development environment
 
 Time to complete: 5 - 10 minutes.
 
 
-### What are we building?
+## What are we building?
 
 * We are setting up the AWS credential with the permissions to different
   services.
@@ -11,7 +11,7 @@ Time to complete: 5 - 10 minutes.
   Lambda.
 
 
-### Setup AWS account
+## Setup AWS account
 
 1. Download and Install AWS CLI tool
 
@@ -21,9 +21,9 @@ Time to complete: 5 - 10 minutes.
 
 
 
-### Setup development environment
+## Setup development environment
 
-1. Download bentoctl
+### 1. Download bentoctl
 
 | Because bentoctl is still in pre-release, we will use the `--pre` flag for
 pip to install the pre-release version.
@@ -40,14 +40,14 @@ bentoml --version
 ```
 to verify installation and make sure the BentoML version is >=1.0.
 
-2. Install the Hugging Face transformers library along with pytorch since we
+### 2. Install the Hugging Face transformers library along with pytorch since we
 will be using pytorch based models for building our service.
 
 ``` 
 pip install transformers[torch] 
 ```
 
-3. Add the `aws-lambda` operator | Operators are plugins that interact with the
+### 3. Add the `aws-lambda` operator | Operators are plugins that interact with the
 cloud services to perform the bentoctl commands | Refer to the Core Concepts
 page for more information about the operator.
 
