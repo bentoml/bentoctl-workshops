@@ -5,9 +5,9 @@ Time to complete: 5 - 10 minutes.
 
 ## What are we building?
 
-* We are setting up the AWS credential with the permissions to different
+1. We are setting up the AWS credential with the permissions to different
   services.
-* Install bentoctl and the `aws-lambda` operator required to deploy to AWS
+2. Install bentoctl and the `aws-lambda` operator required to deploy to AWS
   Lambda.
 
 
@@ -25,7 +25,7 @@ Time to complete: 5 - 10 minutes.
 
 ### 1. Download bentoctl
 
-| Because bentoctl is still in pre-release, we will use the `--pre` flag for
+> Because bentoctl is still in pre-release, we will use the `--pre` flag for
 pip to install the pre-release version.
 
 ``` 
