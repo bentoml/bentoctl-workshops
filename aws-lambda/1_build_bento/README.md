@@ -17,8 +17,8 @@ testing, we will build it and save to the local system.
 
 ### 1. Create the model
 
-We going to use a pre-trained model from the Hugging Face. The `train.py` file
-has 3 models that are ready to be used.
+We going to use a pre-trained model from the Hugging Face. There is `train.py` file
+in this folder that has 3 models already configured that are ready for you to be used.
 
 - `cardiffnlp/twitter-roberta-base-sentiment` - a very popular model that is
   used for sentiment analysis tasks. Model size is ~500Mb.
@@ -86,7 +86,7 @@ def predict(input_text: str) -> Dict:
 ```
 
 This service takes in Text input and return a JSON with the result.
-Let's serve this service and test the API out.
+Let's serve it and test the API out.
 ```
 bentoml serve ./bento.py:svc --reload
 ```
@@ -110,7 +110,7 @@ Note: if you are using the dummy model then the result will be always `{"label":
 ### 3. Build Bento 
 
 Now that we have tested the service and made sure everything is working let's build
-the bento save it to the local bento store.
+the bento and save it to the local bento store.
 ```
 bentoml build
 
@@ -145,6 +145,6 @@ Tag                                  Service      Path                          
 sentiment_analysis:uja63oeh6wbdgh6p  bento:svc    ~/bentoml/bentos/sentiment_analysis/uja63oeh6wbdgh6p  478.79 MiB  2022-02-07 09:09:26
 ```
 
-If it is, the congrats, you have successfully created a bentoml service for 
+If it is, the congrations, you have successfully created the bentoml service for 
 sentiment analysis using a pretrained model from Hugging Face. Now lets 
 deploy this into AWS Lambda.
