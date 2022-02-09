@@ -2,18 +2,21 @@
 
 ### Goals
 
-After the workshop, you should have a ML service hosted on AWS Lambda that
-accepts HTTP requests.
+After this workshop, you should have build a BentoML service deployed it 
+into AWS Lambda.
 
 
 ### Workshop walkthrough
 
 In this workshop, we will be deploying an ML service for online serving with
-AWS Lambda. We will first build a [sentiment
-analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) service with
-BentoML and Hugging Face transformers model and then deploy it to AWS Lambda
-using bentoctl. Finally we will run an inference against the deployed Lambda
-function.
+AWS Lambda. We will 
+
+1. Build a [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) service with
+BentoML and Hugging Face transformers model 
+
+2. Deploy it to AWS Lambda using bentoctl. 
+
+3. Finally we will run an inference against the deployed Lambda function.
 
 
 
