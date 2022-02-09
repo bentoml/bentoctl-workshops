@@ -40,15 +40,16 @@ bentoml --version
 ```
 to verify installation and make sure the BentoML version is >=1.0.
 
-### 2. Install the Hugging Face transformers library along with pytorch since we
-will be using pytorch based models for building our service.
+### 2. Install the transformers library
+install the Hugging Face library along with pytorch since we will be using pytorch based models for building our service.
 
 ``` 
 pip install transformers[torch] 
 ```
 
-### 3. Add the `aws-lambda` operator | Operators are plugins that interact with the
-cloud services to perform the bentoctl commands | Refer to the Core Concepts
+### 3. Add the `aws-lambda` operator 
+> Operators are plugins that interact with the
+cloud services to perform the bentoctl commands. Refer to the Core Concepts
 page for more information about the operator.
 
 You can add operators and install all its dependencies using the `bentoctl
