@@ -1,15 +1,16 @@
-from sklearn import svm
-from sklearn import datasets
-
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import bentoml
 
 
-# Load training data
-iris = datasets.load_iris()
-X, y = iris.data, iris.target
+# PLEASE UNCOMMENT THE MODEL YOU WANT TO USE
+# MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
+# MODEL = "bhadresh-savani/distilbert-base-uncased-sentiment-sst2"
+# MODEL = "dhpollack/distilbert-dummy-sentiment"
 
-# Model Training
-clf = svm.SVC(gamma='scale')
-clf.fit(X, y)
 
-bentoml.sklearn.save("iris_clf", clf)
+# load the model and tokenizer for the MODEL selected
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+
+# save the model into bentoml's model store
+bentoml.transformers.save("sentiment_clf", model=model, tokenizer=tokenizer)
